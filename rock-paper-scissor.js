@@ -1,6 +1,21 @@
 // Initialize the scores for the human and computer
 let humanScore = 0;
 let computerScore = 0;
+let userChoice;
+
+// buttons to get the users choice
+    
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    userChoice = button.id; // Correct: Set userChoice on click
+    console.log("User Choice:", userChoice);
+    playRound(); // Correct: Call playRound *after* setting userChoice
+  });
+});
+
+
 
 // Function to get the computer's choice (randomized between rock, paper, and scissors)
 function getComputerChoice() {
@@ -12,72 +27,59 @@ function getComputerChoice() {
   if (randomNumber === 2) return "paper";
   if (randomNumber === 3) return "scissors";
 }
-  
+
 // Function to get the human's choice
 function getHumanChoice() {
-  let userChoice;
-  
-  // Keep asking for input until a valid choice is made
-  while (true) {
-    userChoice = prompt("Rock/Paper/Scissors?");
-    
+
     // If the user cancels the prompt, exit the game
     if (userChoice === null) {  
       alert("Game canceled. Press Start to play again.");
       return null;
     }
 
-    // Convert the input to lowercase and remove any extra spaces
-    userChoice = userChoice.toLowerCase().trim();
-    
     // Check if the input is valid (rock, paper, or scissors)
     if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
       return userChoice;  // Return the user's choice if valid
-    } else {
-      // Inform the user if their input is invalid
-      alert("Check your spelling. Please enter Rock, Paper, or Scissors.");
     }
   }
-}
 
-// Get both human and computer's choices
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
 
 // Function to play one round of the game
-function playRound(humanSelection, computerSelection) {
-  // Display the choices of both players
-  console.log(`You chose: ${humanSelection}`);
-  console.log(`Computer chose: ${computerSelection}`);
+function playRound() {  // No parameters needed
+  if (!userChoice) {
+    alert ("select a valid oprtion");
+      return; // Handle the case where the user hasn't chosen yet
+  }
 
-  // If both players chose the same option, it's a draw
-  if (humanSelection === computerSelection) {
-    console.log(`You draw!, ${humanSelection} and ${computerSelection} are the same`);
+const computerSelection = getComputerChoice();
+console.log(`Computer chose: ${computerSelection}`);
+
+if (userChoice === computerSelection) {
+  console.log(`You draw!, ${userChoice} and ${computerSelection} are the same`);
+} else if (
+  (userChoice === "rock" && computerSelection === "scissors") ||
+  (userChoice === "paper" && computerSelection === "rock") ||
+  (userChoice === "scissors" && computerSelection === "paper")
+) {
+  console.log(`You Win!, ${userChoice} beats ${computerSelection}`);
+  humanScore++;
+} else {
+  console.log(`You Lose!, ${userChoice} loses to ${computerSelection}`);
+  computerScore++;
+}
+
+console.log(`Human Score: ${humanScore}`);
+console.log(`Computer Score: ${computerScore}`);
+
+  if (humanScore >= 5 || computerScore >= 5) {
+      endGame();
   }
-  // If the human wins, update the score and display the result
-  else if (
-    (humanSelection === "rock" && computerSelection === "scissors") ||
-    (humanSelection === "paper" && computerSelection === "rock") ||
-    (humanSelection === "scissors" && computerSelection === "paper")
-  ) {
-    console.log(`You Win!, ${humanSelection} beats ${computerSelection}`);
-    humanScore++;  // Increment the human's score
-  }
-  // If the computer wins, update the score and display the result
-  else {
-    console.log(`You Lose!, ${humanSelection} loses to ${computerSelection}`);
-    computerScore++;  // Increment the computer's score
-  }
+  userChoice = null; 
 }
 
 // Function to play the game for 5 rounds
 function playGame() {
-  // Reset scores at the start of the game
-  humanScore = 0;
-  computerScore = 0;
 
-  // Play 5 rounds of the game
-  for (let i = 0; i < 5; i++) {
     let humanSelection = getHumanChoice();
     
     // If the human cancels the game, stop playing
@@ -105,7 +107,16 @@ function playGame() {
   } else {
     console.log("You Draw! Where's the fun in that? Let's play again.");
   }
-}
 
-// Start the game
-playGame();
+
+function endGame() {
+    if (humanScore > computerScore) {
+      console.log("You Win! You will run it back, right?");
+    } else if (humanScore < computerScore) {
+      console.log("You Lose! Let's try again.");
+    } else {
+      console.log("You Draw! Where's the fun in that? Let's play again.");
+    }
+    humanScore = 0;
+    computerScore = 0;
+  }
