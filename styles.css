@@ -1,0 +1,104 @@
+body {
+    background-color: #F8FFE5;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+div.playArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 200px;
+    background-color: #FFC43D;
+    border-radius: 20px;
+    flex-grow: 1;
+    height: 50vh;
+    margin: 40px;
+    border: 5px white;
+    border-style: solid;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Added box shadow */
+}
+
+div.playActions{
+    display: flex;
+
+}
+button {
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+    margin: 5px;
+    border-radius: 10px;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 250px;
+    min-width: 150px;
+    box-sizing: border-box;
+    border: 5px white;
+    border-style: solid;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    transition: background-color 0.5s ease; /* Smooth transition effect */
+}
+
+
+button#rock {
+    background-color: #EF476F;
+    opacity: 90%;
+}
+
+button#rock:hover {
+    background-color: #EF476F;
+    opacity: 100%; /* Darker shade for hover */
+}
+
+button#paper {
+    background-color: #1B9AAA;
+    opacity: 90%;
+}
+
+button#paper:hover {
+    background-color: #1B9AAA; /* Darker shade for hover */
+    opacity: 100%;
+}
+
+button#scissors {
+    background-color: #06D6A0;
+    opacity: 90%;
+}
+
+button#scissors:hover {
+    background-color: #06D6A0; /* Darker shade for hover */
+    opacity: 100%;
+}
+
+
+div.gameOptions{
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    gap: 30px;
+}
+
+button#start{
+    background-color: #F8FFE5;
+    color: black;
+    padding: 10px; 
+}
+
+button#restart{
+    background-color: #F8FFE5;
+    color: black;
+    padding: 10px; 
+}
+
+div.scoreBoard{
+    display: flex;
+    font-weight: bold;
+    font-size: 25px; ;
+    text-align: start;
+    justify-content: space-between;
+    align-content: center;
+
+}
