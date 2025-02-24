@@ -21,19 +21,40 @@ div.playArea {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Added box shadow */
 }
 
-#logo{
+div#logo{
     display: flex;
     justify-content:start ;
     align-items: start;
     margin: 100px;
     font-size: 100px;
-    color:#F8FFE5
+    color:#FFFFFF
+}
+
+div#scoreCard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 70px;
+}
+
+div.score{
+    padding: 20px;
+    font-size: 30px;
+    display: flex;
+    flex-direction: row;
+    color: #FFFFFF;
+    border: 5px white;
+    border-style: solid;
+    border-radius: 5px;
+    min-width: 150px;
+    max-width: 100px;
+    text-align: center;
 }
 
 div.playActions{
     display: flex;
-
 }
+
 button {
     display: flex;
     flex-direction: row;
@@ -52,7 +73,6 @@ button {
     font-weight: bold;
     transition: background-color 0.5s ease; /* Smooth transition effect */
 }
-
 
 button#rock {
     background-color: #EF476F;
@@ -85,31 +105,3 @@ button#scissors:hover {
 }
 
 
-div.gameOptions{
-    display: flex;
-    flex-direction: row;
-    margin-top: 50px;
-    gap: 30px;
-}
-
-button#start{
-    background-color: #F8FFE5;
-    color: black;
-    padding: 10px; 
-}
-
-button#restart{
-    background-color: #F8FFE5;
-    color: black;
-    padding: 10px; 
-}
-
-div.scoreBoard{
-    display: flex;
-    font-weight: bold;
-    font-size: 25px; ;
-    text-align: start;
-    justify-content: space-between;
-    align-content: center;
-
-}
