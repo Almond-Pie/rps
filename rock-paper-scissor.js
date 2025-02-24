@@ -73,17 +73,18 @@ const computerSelection = getComputerChoice();
 console.log(`Computer chose: ${computerSelection}`);
 
 if (userChoice === computerSelection) {
-   results = console.log(`You draw!, ${userChoice} and ${computerSelection} are the same`);
+   results = `You draw!, ${userChoice} and ${computerSelection} are the same`;
+   updateScoreDisplay();
 }
 else if (
   (userChoice === "rock" && computerSelection === "scissors") ||
   (userChoice === "paper" && computerSelection === "rock") ||
   (userChoice === "scissors" && computerSelection === "paper")
-) { results = console.log(`You Win!, ${userChoice} beats ${computerSelection}`);
+) { results = `You Win!, ${userChoice} beats ${computerSelection}`;
   humanScore++;
   updateScoreDisplay();
 }
-else { results = console.log(`You lose!, ${userChoice} loses to ${computerSelection}`);
+else { results = `You lose!, ${userChoice} loses to ${computerSelection}`;
   computerScore++;
   updateScoreDisplay();
 }
@@ -112,10 +113,10 @@ function playGame() {
 
   // After 5 rounds, compare scores and declare a winner
   if (humanScore == 5) {
-    winner = console.log ("You Win! You will run it back, right?");
+    winner = "You Win! You will run it back, right?";
     endGame()
   } else if (computerScore == 5) {
-     winner = console.log("You Lose! You want to try again?");
+     winner = "You Lose! You want to try again?";
      endGame()
   }
 
