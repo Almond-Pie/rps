@@ -1,36 +1,28 @@
 // Initialize the scores for the human and computer
 let humanScore = 0;
 let computerScore = 0;
-let userChoice;
-let results;
-let winner;
+let results = "";
+let winner = "";
 
 // logging user choice by using buttons 
 const buttons = document.querySelectorAll("button");
 
-buttons.forEach((button) => { // forEach = iterate through each (button)
+buttons.forEach((button) => { 
   button.addEventListener("click", () => {
-     const userChoice = button.id; // Set userChoice on click
-
-    if (userChoice === "rock" ||
-      userChoice === "paper" ||
-      userChoice === "scissors"){
-        playRound(userChoice);
-      } else {alert("invalid Option")};   
-  });
-});
+     const userChoice = button.id;
+        playRound(userChoice);})   
+ });
 
 // Function to get the computer's choice (randomized between rock, paper, and scissors)
 function getComputerChoice() {
-  // Generate a random number between 1 and 3
+
   const randomNumber = Math.floor(Math.random() * 3) + 1;
-  
-  // Return the corresponding choice based on the random number
   if (randomNumber === 1) return "rock";
   if (randomNumber === 2) return "paper";
   else  return "scissors";
 }
 
+// Dom elements that update when the either player scior
 const updateScoreDisplay = function(){
   playerScore.textContent = `Human Score: ${humanScore}`;
   robotScore.textContent = `Computer Score: ${computerScore}`;
@@ -51,26 +43,25 @@ const updateScoreDisplay = function(){
   robotScore.textContent = `Computer Score: ${computerScore}`;
   scoreCard.appendChild(robotScore)
   
+  const resultCard = document.querySelector("#resultCard");
+
   const winnerDisplay = document.createElement("div")
-  winnerDisplay.classList.add("score");
-  winnerDisplay.textContent = `winner: ${results}`;
-  scoreCard.appendChild(winnerDisplay)
+  winnerDisplay.classList.add("result");
+  winnerDisplay.textContent = `${winner}`;
+  resultCard.appendChild(winnerDisplay)
 
   const resultsDisplay = document.createElement("div")
-  resultsDisplay.classList.add("score");
-  resultsDisplay.textContent = `${winner}`;
-  scoreCard.appendChild(resultsDisplay)
+  resultsDisplay.classList.add("result");
+  resultsDisplay.textContent = `${results}`;
+  resultCard.appendChild(resultsDisplay)
 
 
 // Function to play one round of the game
 function playRound(userChoice) {  
-  if (!userChoice) {
-    alert ("select a valid oprtion");
-      return; // Handle the case where the user hasn't chosen yet
-  }
+  results = ""; 
+  winner = "";
 
 const computerSelection = getComputerChoice();
-console.log(`Computer chose: ${computerSelection}`);
 
 if (userChoice === computerSelection) {
    results = `You draw!, ${userChoice} and ${computerSelection} are the same`;
@@ -89,45 +80,22 @@ else { results = `You lose!, ${userChoice} loses to ${computerSelection}`;
   updateScoreDisplay();
 }
 
-console.log(`Computer chose: ${computerSelection}`);
-
-console.log(`Human Score: ${humanScore}`);
-console.log(`Computer Score: ${computerScore}`);
-
   if (humanScore >= 5 || computerScore >= 5) {
       endGame();
   }
   userChoice = null; 
 }
-
-// Function to play the game for 5 rounds
-function playGame() {
-
-    // Play one round
-    playRound(humanSelection, computerSelection);
-
-    // Display the scores after each round
-    console.log(`Human Score: ${humanScore}`);
-    console.log(`Computer Score: ${computerScore}`);
-  }
-
-  // After 5 rounds, compare scores and declare a winner
-  if (humanScore == 5) {
-    winner = "You Win! You will run it back, right?";
-    endGame()
-  } else if (computerScore == 5) {
-     winner = "You Lose! You want to try again?";
-     endGame()
-  }
-
+  
+// Function to end the game and declare a winner
 function endGame() {
     if (humanScore > computerScore) {
-      console.log("You Win! You will run it back, right?");
+      winner = "You Win! You want to try again?";
     } else if (humanScore < computerScore) {
-      console.log("You Lose! Let's try again.");
+      winner = "You Lose! You want to try again?";
     }
     humanScore = 0;
     computerScore = 0;
+    updateScoreDisplay(); 
   }
 
 
