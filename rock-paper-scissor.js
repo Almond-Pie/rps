@@ -1,111 +1,102 @@
 // Initialize the scores for the human and computer
 let humanScore = 0;
 let computerScore = 0;
+let results = "";
+let winner = "";
+
+// logging user choice by using buttons 
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => { 
+  button.addEventListener("click", () => {
+     const userChoice = button.id;
+        playRound(userChoice);})   
+ });
 
 // Function to get the computer's choice (randomized between rock, paper, and scissors)
 function getComputerChoice() {
-  // Generate a random number between 1 and 3
+
   const randomNumber = Math.floor(Math.random() * 3) + 1;
-  
-  // Return the corresponding choice based on the random number
   if (randomNumber === 1) return "rock";
   if (randomNumber === 2) return "paper";
-  if (randomNumber === 3) return "scissors";
+  else  return "scissors";
 }
-  
-// Function to get the human's choice
-function getHumanChoice() {
-  let userChoice;
-  
-  // Keep asking for input until a valid choice is made
-  while (true) {
-    userChoice = prompt("Rock/Paper/Scissors?");
-    
-    // If the user cancels the prompt, exit the game
-    if (userChoice === null) {  
-      alert("Game canceled. Press Start to play again.");
-      return null;
-    }
 
-    // Convert the input to lowercase and remove any extra spaces
-    userChoice = userChoice.toLowerCase().trim();
-    
-    // Check if the input is valid (rock, paper, or scissors)
-    if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
-      return userChoice;  // Return the user's choice if valid
-    } else {
-      // Inform the user if their input is invalid
-      alert("Check your spelling. Please enter Rock, Paper, or Scissors.");
-    }
+// Dom elements that update when the either player scior
+const updateScoreDisplay = function(){
+  playerScore.textContent = `Human Score: ${humanScore}`;
+  robotScore.textContent = `Computer Score: ${computerScore}`;
+  winnerDisplay.textContent = `${winner}`;
+  resultsDisplay.textContent = `${results}`;
   }
-}
+  
+  const scoreCard = document.querySelector("#scoreCard");
+  
+  const playerScore = document.createElement("div")
+  playerScore.classList.add("score");
+  playerScore.textContent = `Human Score: ${humanScore}`;
+  scoreCard.appendChild(playerScore)
+  
+  
+  const robotScore = document.createElement("div")
+  robotScore.classList.add("score");
+  robotScore.textContent = `Computer Score: ${computerScore}`;
+  scoreCard.appendChild(robotScore)
+  
+  const resultCard = document.querySelector("#resultCard");
 
-// Get both human and computer's choices
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+  const winnerDisplay = document.createElement("div")
+  winnerDisplay.classList.add("result");
+  winnerDisplay.textContent = `${winner}`;
+  resultCard.appendChild(winnerDisplay)
+
+  const resultsDisplay = document.createElement("div")
+  resultsDisplay.classList.add("result");
+  resultsDisplay.textContent = `${results}`;
+  resultCard.appendChild(resultsDisplay)
+
 
 // Function to play one round of the game
-function playRound(humanSelection, computerSelection) {
-  // Display the choices of both players
-  console.log(`You chose: ${humanSelection}`);
-  console.log(`Computer chose: ${computerSelection}`);
+function playRound(userChoice) {  
+  results = ""; 
+  winner = "";
 
-  // If both players chose the same option, it's a draw
-  if (humanSelection === computerSelection) {
-    console.log(`You draw!, ${humanSelection} and ${computerSelection} are the same`);
-  }
-  // If the human wins, update the score and display the result
-  else if (
-    (humanSelection === "rock" && computerSelection === "scissors") ||
-    (humanSelection === "paper" && computerSelection === "rock") ||
-    (humanSelection === "scissors" && computerSelection === "paper")
-  ) {
-    console.log(`You Win!, ${humanSelection} beats ${computerSelection}`);
-    humanScore++;  // Increment the human's score
-  }
-  // If the computer wins, update the score and display the result
-  else {
-    console.log(`You Lose!, ${humanSelection} loses to ${computerSelection}`);
-    computerScore++;  // Increment the computer's score
-  }
+const computerSelection = getComputerChoice();
+
+if (userChoice === computerSelection) {
+   results = `You draw!, ${userChoice} and ${computerSelection} are the same`;
+   updateScoreDisplay();
+}
+else if (
+  (userChoice === "rock" && computerSelection === "scissors") ||
+  (userChoice === "paper" && computerSelection === "rock") ||
+  (userChoice === "scissors" && computerSelection === "paper")
+) { results = `You Win!, ${userChoice} beats ${computerSelection}`;
+  humanScore++;
+  updateScoreDisplay();
+}
+else { results = `You lose!, ${userChoice} loses to ${computerSelection}`;
+  computerScore++;
+  updateScoreDisplay();
 }
 
-// Function to play the game for 5 rounds
-function playGame() {
-  // Reset scores at the start of the game
-  humanScore = 0;
-  computerScore = 0;
-
-  // Play 5 rounds of the game
-  for (let i = 0; i < 5; i++) {
-    let humanSelection = getHumanChoice();
-    
-    // If the human cancels the game, stop playing
-    if (humanSelection === null) {  
-      console.log("Game stopped by player.");
-      return; 
+  if (humanScore >= 5 || computerScore >= 5) {
+      endGame();
+  }
+  userChoice = null; 
+}
+  
+// Function to end the game and declare a winner
+function endGame() {
+    if (humanScore > computerScore) {
+      winner = "You Win! You want to try again?";
+    } else if (humanScore < computerScore) {
+      winner = "You Lose! You want to try again?";
     }
-
-    // Get the computer's choice
-    let computerSelection = getComputerChoice();
-
-    // Play one round
-    playRound(humanSelection, computerSelection);
-
-    // Display the scores after each round
-    console.log(`Human Score: ${humanScore}`);
-    console.log(`Computer Score: ${computerScore}`);
+    humanScore = 0;
+    computerScore = 0;
+    updateScoreDisplay(); 
   }
 
-  // After 5 rounds, compare scores and declare a winner
-  if (humanScore > computerScore) {
-    console.log("You Win! You will run it back, right?");
-  } else if (humanScore < computerScore) {
-    console.log("You Lose! Let's try again.");
-  } else {
-    console.log("You Draw! Where's the fun in that? Let's play again.");
-  }
-}
 
-// Start the game
-playGame();
+
